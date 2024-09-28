@@ -27,7 +27,16 @@ class BodyXsegment:
         if self.segment_number == 0:
             screen.blit(self.body, (x, y))
         else:
-            screen.blit(self.body, (x, y))
+            f = coordinate[0 - 25]
+            if moving == 'RIGHT':
+                screen.blit(self.body, (f[0], y))
+            elif moving == 'LEFT':
+                screen.blit(self.body, (f[0], y))
+            elif moving == 'UP':
+                screen.blit(self.body, (x, f[1]))
+            elif moving == 'DOWN':
+                screen.blit(self.body, (x, f[1]))
+
 
 class Food:
     def __init__(self, start_position):
@@ -36,17 +45,21 @@ class Food:
         self.body.fill((186, 0, 0))
         self.rect = self.body.get_rect()
     def appearing(self):
+
         screen.blit(self.body, (300, 300))
 
 
 
 #создаем объект персонажа
 head = BodyXsegment(0, (x, y))
-body1 = BodyXsegment(20, (x, y))
+body1 = BodyXsegment(1, (x, y))
 
+#создаем объект еды
 food = Food((300, 300))
 
-coordinate = {}
+coordinate = []
+for i in range(25):
+    coordinate.insert(0, (i, i))
 
 run = True
 while run:
@@ -55,10 +68,13 @@ while run:
             run = False
 
     screen.fill((55, 55, 55))
+    moving = 'RIGHT'
 
     head.moving()
     body1.moving()
     food.appearing()
+
+    coordinate.insert(0, (x, y))
 
 
     keys = pygame.key.get_pressed()
@@ -69,22 +85,22 @@ while run:
     if keys[pygame.K_RIGHT]:
         direction_x = 1
         direction_y = 0
-        coordinate = {"RIGHT" : (x, y)}
+        moving = 'RIGHT'
 
     elif keys[pygame.K_LEFT]:
         direction_x = -1
         direction_y = 0
-        coordinate = {"LEFT" : (x, y)}
+        moving = 'LEFT'
 
     elif keys[pygame.K_UP]:
         direction_x = 0
         direction_y = -1
-        coordinate = {"UP" : (x, y)}
+        moving = 'UP'
 
     elif keys[pygame.K_DOWN]:
         direction_x = 0
         direction_y = 1
-        coordinate = {"DOWN" : (x, y)}
+        moving = 'DOWN'
 
 #проверка столкновения с стенками
 

@@ -30,20 +30,21 @@ class BodyXsegment:
             screen.blit(self.body, (x, y))
 
 class Food:
-    def __init__(self, segment_number, start_position):
-        self.segment_number = segment_number
+    def __init__(self, start_position):
         self.start_position = start_position
         self.body = pygame.Surface((20, 20))
         self.body.fill((186, 0, 0))
         self.rect = self.body.get_rect()
     def appearing(self):
-        pass
+        screen.blit(self.body, (300, 300))
 
 
 
 #создаем объект персонажа
 head = BodyXsegment(0, (x, y))
 body1 = BodyXsegment(20, (x, y))
+
+food = Food((300, 300))
 
 coordinate = {}
 
@@ -57,6 +58,7 @@ while run:
 
     head.moving()
     body1.moving()
+    food.appearing()
 
 
     keys = pygame.key.get_pressed()

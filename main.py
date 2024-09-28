@@ -1,4 +1,7 @@
 import pygame
+import random
+
+
 pygame.init()
 
 WIDTH = 800
@@ -6,7 +9,7 @@ HIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HIGHT))
 pygame.display.set_caption("Snaky")
 
-#начальные положения персонажа
+#начальные положения змеи
 x = 200
 y = 200
 direction_x = 0
@@ -25,6 +28,16 @@ class BodyXsegment:
             screen.blit(self.body, (x, y))
         else:
             screen.blit(self.body, (x, y))
+
+class Food:
+    def __init__(self, segment_number, start_position):
+        self.segment_number = segment_number
+        self.start_position = start_position
+        self.body = pygame.Surface((20, 20))
+        self.body.fill((186, 0, 0))
+        self.rect = self.body.get_rect()
+    def appearing(self):
+        pass
 
 
 
@@ -82,3 +95,4 @@ while run:
     pygame.time.delay(10)
     pygame.display.flip()
 
+pygame.quit()

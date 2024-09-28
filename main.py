@@ -27,7 +27,7 @@ class BodyXsegment:
         if self.segment_number == 0:
             screen.blit(self.body, (x, y))
         else:
-            f = coordinate[0 - 25]
+            f = coordinate[0 + 25]
             if moving == 'RIGHT':
                 screen.blit(self.body, (f[0], y))
             elif moving == 'LEFT':
@@ -58,7 +58,7 @@ body1 = BodyXsegment(1, (x, y))
 food = Food((300, 300))
 
 coordinate = []
-for i in range(25):
+for i in range(26):
     coordinate.insert(0, (i, i))
 
 run = True

@@ -4,8 +4,8 @@ import random
 
 pygame.init()
 
-WIDTH = 800
-HIGHT = 600
+WIDTH = 600
+HIGHT = 400
 screen = pygame.display.set_mode((WIDTH, HIGHT))
 pygame.display.set_caption("Snaky")
 
@@ -26,9 +26,8 @@ class BodyXsegment:
 
     def moving(self):
         f = coordinate[self.segment_number * 25]  # координата с отстованием, кратным номеру сегмента
-        screen.blit(self.body, (f[0], f[1]))
-
-
+        self.rect = self.body.get_rect(topleft=(f[0], f[1]))
+        screen.blit(self.body, self.rect)
 
 
 class Food:
@@ -38,28 +37,35 @@ class Food:
         self.body.fill((186, 0, 0))
         self.rect = self.body.get_rect()
 
-    def appearing(self):
-
-        screen.blit(self.body, (300, 300))
+    def appearing(self, x_food, y_food):
+        self.rect = self.body.get_rect(topleft=(x_food, y_food))
+        screen.blit(self.body, self.rect)
 
 
 #создаем начальные сегменты персонажа
 snake = []
-for n in range(5):
+for n in range(3):
     segment = BodyXsegment(n, (x, y))
     snake.append(segment)
 
 #задаем начальные координаты сегментов
 coordinate = []
-for i in range(1000):
+for i in range(100):
     coordinate.insert(0, (x, y))
 
 #создаем объект еды
-food = Food((300, 300))
+x_food = random.randint(0, WIDTH-20)
+y_food = random.randint(0, HIGHT-20)
+food = Food((x_food, y_food))
 
-
-
-
+def collidefood():
+    if snake[0].rect.colliderect(food.rect):
+        global y_food
+        global x_food
+        x_food = random.randint(0, WIDTH-20)
+        y_food = random.randint(0, HIGHT-20)
+        segment = BodyXsegment(len(snake), (x, y))
+        snake.append(segment)
 
 run = True
 while run:
@@ -68,12 +74,12 @@ while run:
             run = False
 
     screen.fill((55, 55, 55))
-    moving = 'RIGHT'
 
     for segment in snake:
         segment.moving()
 
-    food.appearing()
+    food.appearing(x_food, y_food)
+    collidefood()
 
     coordinate.insert(0, (x, y))
 
@@ -106,12 +112,6 @@ while run:
     if x > WIDTH or x < 0 or y > HIGHT or y < 0:
         run = False
 
-
-    #проверка столкновения с едой
-
-
-
-    #print(coordinate)
     pygame.time.delay(10)
     pygame.display.flip()
 

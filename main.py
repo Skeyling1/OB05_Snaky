@@ -43,21 +43,22 @@ class Food:
         screen.blit(self.body, (300, 300))
 
 
-
-#создаем сегменты персонажа
+#создаем начальные сегменты персонажа
 snake = []
 for n in range(5):
     segment = BodyXsegment(n, (x, y))
     snake.append(segment)
 
+#задаем начальные координаты сегментов
+coordinate = []
+for i in range(1000):
+    coordinate.insert(0, (x, y))
 
 #создаем объект еды
 food = Food((300, 300))
 
 
-coordinate = []
-for i in range(1000):
-    coordinate.insert(0, (x, y))
+
 
 
 run = True
@@ -68,7 +69,6 @@ while run:
 
     screen.fill((55, 55, 55))
     moving = 'RIGHT'
-
 
     for segment in snake:
         segment.moving()

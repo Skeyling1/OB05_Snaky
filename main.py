@@ -91,23 +91,19 @@ while run:
     if keys[pygame.K_RIGHT]:
         direction_x = 1
         direction_y = 0
-        moving = 'RIGHT'
 
     elif keys[pygame.K_LEFT]:
         direction_x = -1
         direction_y = 0
-        moving = 'LEFT'
 
     elif keys[pygame.K_UP]:
         direction_x = 0
         direction_y = -1
-        moving = 'UP'
 
     elif keys[pygame.K_DOWN]:
         direction_x = 0
         direction_y = 1
-        moving = 'DOWN'
-
+ 
     #проверка столкновения с стенками
     if x > WIDTH or x < 0 or y > HIGHT or y < 0:
         run = False

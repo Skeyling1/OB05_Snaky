@@ -23,19 +23,12 @@ class BodyXsegment:
         self.body = pygame.Surface((20, 20))
         self.body.fill((255, 255, 255))
         self.rect = self.body.get_rect()
+
     def moving(self):
-        if self.segment_number == 0:
-            screen.blit(self.body, (x, y))
-        else:
-            f = coordinate[0 + 25]
-            if moving == 'RIGHT':
-                screen.blit(self.body, (f[0], y))
-            elif moving == 'LEFT':
-                screen.blit(self.body, (f[0], y))
-            elif moving == 'UP':
-                screen.blit(self.body, (x, f[1]))
-            elif moving == 'DOWN':
-                screen.blit(self.body, (x, f[1]))
+        f = coordinate[self.segment_number * 25]  # координата с отстованием, кратным номеру сегмента
+        screen.blit(self.body, (f[0], f[1]))
+
+
 
 
 class Food:
@@ -44,22 +37,28 @@ class Food:
         self.body = pygame.Surface((20, 20))
         self.body.fill((186, 0, 0))
         self.rect = self.body.get_rect()
+
     def appearing(self):
 
         screen.blit(self.body, (300, 300))
 
 
 
-#создаем объект персонажа
-head = BodyXsegment(0, (x, y))
-body1 = BodyXsegment(1, (x, y))
+#создаем сегменты персонажа
+snake = []
+for n in range(5):
+    segment = BodyXsegment(n, (x, y))
+    snake.append(segment)
+
 
 #создаем объект еды
 food = Food((300, 300))
 
+
 coordinate = []
-for i in range(26):
-    coordinate.insert(0, (i, i))
+for i in range(1000):
+    coordinate.insert(0, (x, y))
+
 
 run = True
 while run:
@@ -70,17 +69,18 @@ while run:
     screen.fill((55, 55, 55))
     moving = 'RIGHT'
 
-    head.moving()
-    body1.moving()
+
+    for segment in snake:
+        segment.moving()
+
     food.appearing()
 
     coordinate.insert(0, (x, y))
 
-
-    keys = pygame.key.get_pressed()
-
     x += direction_x
     y += direction_y
+
+    keys = pygame.key.get_pressed()
 
     if keys[pygame.K_RIGHT]:
         direction_x = 1

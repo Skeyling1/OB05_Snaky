@@ -25,7 +25,7 @@ class BodyXsegment:
         self.rect = self.body.get_rect()
 
     def moving(self):
-        f = coordinate[self.segment_number * 25]  # координата с отстованием, кратным номеру сегмента
+        f = coordinate[self.segment_number * 30]  # координата с отстованием, кратным номеру сегмента
         self.rect = self.body.get_rect(topleft=(f[0], f[1]))
         screen.blit(self.body, self.rect)
 
@@ -112,7 +112,18 @@ while run:
     if x > WIDTH or x < 0 or y > HIGHT or y < 0:
         run = False
 
-    pygame.time.delay(10)
+    # проверка столкновения с телом
+    if len(snake) > 3:
+        for segment in snake:
+            if segment == snake[0]:
+                continue
+            elif segment.rect.collidepoint(snake[0].rect.center):
+                run = False
+
+
+
+
+    pygame.time.delay(5)
     pygame.display.flip()
 
 pygame.quit()

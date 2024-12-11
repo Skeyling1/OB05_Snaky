@@ -103,7 +103,7 @@ while run:
     elif keys[pygame.K_DOWN]:
         direction_x = 0
         direction_y = 1
- 
+
     #проверка столкновения с стенками
     if x > WIDTH or x < 0 or y > HIGHT or y < 0:
         run = False
